@@ -1,0 +1,29 @@
+name: Metaphor Connectors GitHub Action
+description: >
+  A GitHub Action for running Metaphor Connectors.
+  See https://github.com/MetaphorData/connectors for more details. 
+inputs:
+  type:
+    description: Type of the connector to run
+    required: true
+
+  config:
+    description: Path to the YAML config file 
+    required: true
+
+  s3-path:
+    description: Set or override output S3 path 
+    required: false
+    default: ''
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.type }}
+    - ${{ inputs.config }}
+    - ${{ inputs.s3-path }}
+
+branding:
+  color: purple
+  icon: upload-cloud

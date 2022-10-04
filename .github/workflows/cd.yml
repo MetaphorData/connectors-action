@@ -1,0 +1,36 @@
+name: cd
+
+on:
+  push:
+    branches: [main]
+
+  schedule:
+  # Runs daily at 6am
+    - cron: 0 6 * * *
+
+  workflow_dispatch:
+
+jobs:
+  custom-metadata:
+    name: Custom Metadata
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          env:
+            - stage
+            - qa
+            - demo
+            - sandbox
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.11
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: manual.metadata
+            config: .github/workflows/configs/custom_metadata.yml
+            s3-path: s3://metaphor-mce-${{ matrix.env }}/custom_metadata

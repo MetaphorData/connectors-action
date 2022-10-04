@@ -1,0 +1,32 @@
+<img src="./logo.png" width="300" />
+
+# Metaphor Connectors GitHub Action
+A [GitHub Action](https://docs.github.com/en/actions) for running [Metaphor Connectors](https://github.com/MetaphorData/connectors) to extract and publish metadata to [Metaphor](https://metaphor.io).
+
+# Usage
+
+Add the following to the [GitHub Workflow](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions) in your GitHub repository.
+
+```yaml
+- uses: MetaphorData/connectors-action@v0.11
+  env:
+    # The AWS credentials & region to use when uploading files to S3 
+    AWS_ACCESS_KEY_ID: ''
+    AWS_SECRET_ACCESS_KEY: ''
+    AWS_DEFAULT_REGION: ''
+    
+  with:
+    # The type of connector to run, e.g. bigquery, snowflake, etc.
+    type: ''
+
+    # YAML config file for the connector
+    config: ''
+
+    # (Optional) Set or override the output S3 path, in the form of s3://<bucket>/<directory>
+    s3-path: ''
+
+```
+
+# License
+
+The scripts and documentation in this project are released under the [Apache V2 License](./LICENSE).
