@@ -1,0 +1,12 @@
+datasets:
+  - id:
+      platform: SNOWFLAKE
+      name: acme.ride_share.cleaned_bike_rides
+      account: metaphor-dev
+    metadata:
+      health-score: 0.98
+      md5-checksum: b4206b74b7563ec684336f054582605b
+      embedded-data:
+        list: [1, 2, 3]
+        dict:
+          key: val
