@@ -6,7 +6,9 @@ datasets:
     metadata:
       health-score: 0.98
       md5-checksum: b4206b74b7563ec684336f054582605b
-      embedded-data:
-        list: [1, 2, 3]
-        dict:
-          key: val
+      data-domain:
+        name: 'SalesOps'
+        data-products: ['Customers', Sales, 'Retail']
+        attributes:
+          golden: true
+          slack: '#sales-ops'
