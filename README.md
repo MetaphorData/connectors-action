@@ -1,4 +1,4 @@
-<img src="./logo.png" width="300" />
+<a href="https://metaphor.io"><img src="./logo.png" width="300" /></a>
 
 # Metaphor Connectors GitHub Action
 A [GitHub Action](https://docs.github.com/en/actions) for running [Metaphor Connectors](https://github.com/MetaphorData/connectors) to extract and publish metadata to [Metaphor](https://metaphor.io).
