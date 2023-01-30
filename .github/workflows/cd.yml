@@ -34,3 +34,28 @@ jobs:
             type: manual.metadata
             config: .github/workflows/configs/custom_metadata.yml
             s3-path: s3://metaphor-mce-${{ matrix.env }}/custom_metadata
+
+  manual-lineage:
+    name: Manual Lineage
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          env:
+            - stage
+            - qa
+            - demo
+            - sandbox
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.11
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: manual.lineage
+            config: .github/workflows/configs/manual_lineage.yml
+            s3-path: s3://metaphor-mce-${{ matrix.env }}/manual_lineage
+

@@ -1,0 +1,16 @@
+lineages:
+  - dataset:
+      platform: SNOWFLAKE
+      name: acme.berlin_bicycles.cycle_hire
+      account: metaphor-dev
+    upstreams:
+      - platform: EXTERNAL
+        name: \\network\spreadsheets\company_data.xls
+
+  - dataset:
+      platform: SNOWFLAKE
+      name: acme.shopify_shopify.shopify__order_lines
+      account: metaphor-dev
+    upstreams:
+      - platform: EXTERNAL
+        name: google.drive.1GcK2cUwYs5AI2bGSUxpdQEyr_9B3up6foFIwPibmWpc
