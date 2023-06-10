@@ -8,7 +8,7 @@ A [GitHub Action](https://docs.github.com/en/actions) for running [Metaphor Conn
 Add the following to the [GitHub Workflow](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions) in your GitHub repository.
 
 ```yaml
-- uses: MetaphorData/connectors-action@v0.11
+- uses: MetaphorData/connectors-action@v0.12
   env:
     # The AWS credentials & region to use when uploading files to S3 
     AWS_ACCESS_KEY_ID: ''
@@ -39,7 +39,7 @@ client_secret: ${CLIENT_SECRET}
 Then you set the enviornment variables using the encrypted values stored in in [GitHub Secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in the GitHub workflow job:
 
 ```yaml
-- uses: MetaphorData/connectors-action@v0.11
+- uses: MetaphorData/connectors-action@v0.12
   env:
     # The AWS credentials & region to use when uploading files to S3 
     CLIENT_ID: ${{ secrets.client_id }}

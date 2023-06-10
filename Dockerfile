@@ -1,6 +1,6 @@
 FROM python:3.7
 
-RUN pip install "metaphor-connectors[all]~=0.11.0"
+RUN pip install "metaphor-connectors[all]~=0.12.0"
 
 COPY entrypoint.sh /entrypoint.sh
 
