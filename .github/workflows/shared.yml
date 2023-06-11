@@ -1,0 +1,53 @@
+name: shared
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+        type: string
+        required: true
+
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        description: AWS access key ID for deployment
+        required: true
+
+      AWS_SECRET_ACCESS_KEY:
+        description: AWS secret access key for deployment
+        required: true
+
+jobs:
+  custom-metadata:
+    name: Custom Metadata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.12
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: custom.metadata
+            config: .github/workflows/configs/custom_metadata.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/custom_metadata
+
+  custom-lineage:
+    name: Custom Lineage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.12
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: custom.lineage
+            config: .github/workflows/configs/custom_lineage.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/custom_lineage
