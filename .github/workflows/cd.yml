@@ -17,7 +17,7 @@ jobs:
           - qa
           - demo
           - sandbox
-    uses: MetaphorData/connectors-action/.github/workflows/shared.yml@main
+    uses: ./.github/workflows/shared.yml
     with:
         env: ${{ matrix.env }}
     secrets:

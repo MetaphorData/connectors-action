@@ -9,7 +9,7 @@ on:
 
 jobs:
   manual:
-    uses: MetaphorData/connectors-action/.github/workflows/shared.yml@main
+    uses: ./.github/workflows/shared.yml
     with:
         env: ${{ inputs.env }}
     secrets:
