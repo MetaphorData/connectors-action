@@ -8,54 +8,18 @@ on:
   # Runs daily at 6am
     - cron: 0 6 * * *
 
-  workflow_dispatch:
-
 jobs:
-  custom-metadata:
-    name: Custom Metadata
-    runs-on: ubuntu-latest
+  cd:
     strategy:
-        matrix:
-          env:
-            - stage
-            - qa
-            - demo
-            - sandbox
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - uses: MetaphorData/connectors-action@v0.12
+      matrix:
         env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: us-west-2
-        with:
-            type: custom.metadata
-            config: .github/workflows/configs/custom_metadata.yml
-            s3-path: s3://metaphor-mce-${{ matrix.env }}/custom_metadata
-
-  custom-lineage:
-    name: Custom Lineage
-    runs-on: ubuntu-latest
-    strategy:
-        matrix:
-          env:
-            - stage
-            - qa
-            - demo
-            - sandbox
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - uses: MetaphorData/connectors-action@v0.12
-        env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            AWS_REGION: us-west-2
-        with:
-            type: custom.lineage
-            config: .github/workflows/configs/custom_lineage.yml
-            s3-path: s3://metaphor-mce-${{ matrix.env }}/custom_lineage
-
+          - stage
+          - qa
+          - demo
+          - sandbox
+    uses: MetaphorData/connectors-action/.github/workflows/shared.yml@main
+    with:
+        env: ${{ matrix.env }}
+    secrets:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
