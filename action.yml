@@ -1,4 +1,5 @@
 name: Metaphor Connectors GitHub Action
+author: Metaphor Data
 description: >
   A GitHub Action for running Metaphor Connectors.
   See https://github.com/MetaphorData/connectors for more details. 
