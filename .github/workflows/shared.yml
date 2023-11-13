@@ -59,7 +59,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - run: which metaphor
       - uses: MetaphorData/connectors-action@v0.12
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
