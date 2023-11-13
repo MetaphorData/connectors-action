@@ -1,0 +1,11 @@
+datasets:
+  - id:
+      platform: SNOWFLAKE
+      name: acme.ride_share.cleaned_bike_rides
+      account: metaphor-dev
+    column_descriptions:
+      - column_name: AVERAGE_DURATION
+        descriptions:
+        - description: "average duration for the bike ride."
+          email: example@domain.com
+
