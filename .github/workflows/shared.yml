@@ -60,6 +60,8 @@ jobs:
         uses: actions/checkout@v2
 
       - uses: MetaphorData/connectors-action@v0.12
+        run: cat /usr/local/lib/python3.8/site-packages/metaphor/custom/governance/config.py
+      - uses: MetaphorData/connectors-action@v0.12
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
