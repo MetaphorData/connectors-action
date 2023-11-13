@@ -3,6 +3,18 @@ datasets:
       platform: SNOWFLAKE
       name: acme.ride_share.cleaned_bike_rides
       account: metaphor-dev
+    ownerships:
+      - type: Analytics Owner
+        email: example@domain.com
+    tags:
+      - EXAMPLE_TAG
+    column_tags:
+      - column: AVERAGE_DURATION
+        tags:
+          - EXAMPLE_COLUMN_TAG
+    descriptions:
+      - description: "This table contains a transformed version of the raw_bike_hires table, which includes additional calculated fields such as creating a duration in minutes field. Each ride has been aggregated so any journey that starts and ends at the same station, in the same month and roughly time of day are aggregated together to get the total minutes similar journeys have taken."
+        email: example@domain.com
     column_descriptions:
       - column_name: AVERAGE_DURATION
         descriptions:
