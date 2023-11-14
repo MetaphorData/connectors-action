@@ -5,8 +5,9 @@ datasets:
       account: metaphor-dev
     ownerships:
       - type: Analytics Owner
-        email: example@domain.com
+        email: mars@metaphor.io
     tags:
+
       - Gold
     column_tags:
       - column: AVERAGE_DURATION
@@ -15,10 +16,10 @@ datasets:
           - Bronze
     descriptions:
       - description: "This table contains a transformed version of the raw_bike_hires table, which includes additional calculated fields such as creating a duration in minutes field. Each ride has been aggregated so any journey that starts and ends at the same station, in the same month and roughly time of day are aggregated together to get the total minutes similar journeys have taken."
-        email: example@domain.com
+        email: mars@metaphor.io
     column_descriptions:
       - column_name: AVERAGE_DURATION
         descriptions:
         - description: "average duration for the bike ride."
-          email: example@domain.com
+          email: mars@metaphor.io
 
