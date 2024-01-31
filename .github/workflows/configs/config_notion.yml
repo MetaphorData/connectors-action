@@ -1,5 +1,5 @@
-notion_api_token: ${{ secrets.NOTION_API_TOKEN }}
-azure_openAI_key: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+notion_api_token: ${ NOTION_API_TOKEN }
+azure_openAI_key: ${ METAPHOR_AZURE_OPENAI_KEY }
 azure_openAI_version: "2023-12-01-preview"
 azure_openAI_endpoint: ${ METAPHOR_AZURE_OPENAI_ENDPOINT }
 azure_openAI_model: text-embedding-ada-002
