@@ -34,6 +34,7 @@ jobs:
 
       - uses: MetaphorData/connectors-action@v0.13
         env:
+            OPENAI_API_KEY: "thisisadummyapikey123456789"
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
