@@ -1,0 +1,41 @@
+name: static-web_manual
+
+on:
+  workflow_dispatch:
+      inputs:
+          env:
+              description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+              required: true
+
+      secrets:
+        AWS_ACCESS_KEY_ID:
+          description: AWS access key ID for deployment
+          required: true
+
+        AWS_SECRET_ACCESS_KEY:
+          description: AWS secret access key for deployment
+          required: true
+
+        METAPHOR_AZURE_OPENAI_KEY:
+          description: Azure OpenAI services key
+          required: true
+      
+jobs:
+  notion-crawl:
+    name: Static Webpage Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.13
+        env:
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: static-web
+            config: .github/workflows/configs/config_static-web.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/static-web
