@@ -28,8 +28,8 @@ on:
           required: true
       
 jobs:
-  notion-crawl:
-    name: Static Webpage Crawl
+  monday-crawl:
+    name: Monday.com Crawl
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
