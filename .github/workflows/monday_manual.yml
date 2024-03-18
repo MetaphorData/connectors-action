@@ -45,6 +45,6 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_REGION: us-west-2
         with:
-            type: static-web
-            config: .github/workflows/configs/config_static-web.yml
-            s3-path: s3://metaphor-mce-${{ inputs.env }}/static-web
+            type: monday
+            config: .github/workflows/configs/config_monday.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/monday
