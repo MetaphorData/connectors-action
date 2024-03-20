@@ -1,7 +1,7 @@
 monday_api_key: ${MONDAY_API_KEY}
 monday_api_version: '2024-04'
 
-boards: [6238045435, 6160962920]
+boards: [6238045435, 6238054278, 6238208123]
 
 azure_openAI_key: ${METAPHOR_AZURE_OPENAI_KEY}
 azure_openAI_version: "2023-12-01-preview"
