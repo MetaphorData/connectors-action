@@ -2,7 +2,7 @@ name: confluence_manual
 
 on:
   schedule:
-    - cron: "0 22 * * *"  # 10PM UTC daily
+    - cron: "0 5 * * *"  # 10PM PST daily
   workflow_dispatch:
       inputs:
           env:
