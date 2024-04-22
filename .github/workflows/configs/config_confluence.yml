@@ -1,4 +1,4 @@
-confluence_base_URL: ${CONFLUENCE_BASE_URL}
+confluence_base_URL: https://metaphor-test.atlassian.net/wiki
 confluence_cloud: true
 select_method: "label"
 
