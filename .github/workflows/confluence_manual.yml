@@ -42,7 +42,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up defaults for scheduled run
-        if: github.event_name == 'scheduled'
+        if: github.event_name == 'schedule'
         run: |
           echo "OUTPUT_ENV=stage" >> $GITHUB_ENV
           echo "SPACE_KEY=KB" >> $GITHUB_ENV
