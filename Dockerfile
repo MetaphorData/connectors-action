@@ -1,4 +1,4 @@
-FROM metaphordata/connectors:0.13
+FROM metaphordata/connectors:0.14
 
 COPY entrypoint.sh /entrypoint.sh
 
