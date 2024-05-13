@@ -46,8 +46,8 @@ jobs:
 
       - uses: MetaphorData/connectors-action@v0.14
         env:
-            SHAREPOINT_CLIENT_ID: ${{ vars.CLIENT_ID }}
-            SHAREPOINT_TENANT_ID: ${{ vars.TENANT_ID }}
+            SHAREPOINT_CLIENT_ID: ${{ vars.SHAREPOINT_CLIENT_ID }}
+            SHAREPOINT_TENANT_ID: ${{ vars.SHAREPOINT_TENANT_ID }}
             SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
