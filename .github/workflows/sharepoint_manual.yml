@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "OUTPUT_ENV=${{ inputs.env }}" >> $GITHUB_ENV
 
-      - uses: MetaphorData/connectors-action@v0.13
+      - uses: MetaphorData/connectors-action@v0.14
         env:
             SHAREPOINT_CLIENT_ID: ${{ vars.SHAREPOINT_CLIENT_ID }}
             SHAREPOINT_TENANT_ID: ${{ vars.SHAREPOINT_TENANT_ID }}
