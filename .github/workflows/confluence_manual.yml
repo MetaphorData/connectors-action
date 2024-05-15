@@ -53,7 +53,7 @@ jobs:
           echo "OUTPUT_ENV=${{ inputs.env }}" >> $GITHUB_ENV
           echo "SPACE_KEY=${{ inputs.space_key }}" >> $GITHUB_ENV
 
-      - uses: MetaphorData/connectors-action@v0.13
+      - uses: MetaphorData/connectors-action@v0.14
         env:
             CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
             CONFLUENCE_PASSWORD: ${{ secrets.CONFLUENCE_PASSWORD }}
