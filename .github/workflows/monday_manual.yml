@@ -35,7 +35,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: MetaphorData/connectors-action@v0.13
+      - uses: MetaphorData/connectors-action@v0.14
         env:
             MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
             MONDAY_BOARDS: ${{ fromJSON(inputs.boards) }}
