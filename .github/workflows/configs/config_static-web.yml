@@ -1,8 +1,8 @@
-links: ['https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/glossary']
-depths: [1]
+links: [${TARGET_LINK}]
+depths: [${TARGET_DEPTH}]
 azure_openAI_key: ${METAPHOR_AZURE_OPENAI_KEY}
-azure_openAI_version: "2023-12-01-preview"
+azure_openAI_version: 2024-03-01-preview
 azure_openAI_endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}
-azure_openAI_model: text-embedding-ada-002
-azure_openAI_model_name: Embedding_ada002
+azure_openAI_model: text-embedding-3-small
+azure_openAI_model_name: Embedding_3_small
 include_text: true

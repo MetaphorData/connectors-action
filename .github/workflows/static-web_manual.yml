@@ -3,6 +3,12 @@ name: static-web_manual
 on:
   workflow_dispatch:
       inputs:
+          target_link:
+              description: Publicly accessible link to scrape.
+              required: true
+          target_depth:
+              description: Recursion depth to scrape. Typically 0 or 1.
+              required: true
           env:
               description: Environment to publish to (e.g. dev-marslan, stage, etc.)
               required: true
@@ -30,6 +36,8 @@ jobs:
 
       - uses: MetaphorData/connectors-action@v0.13
         env:
+            TARGET_LINK: ${{ inputs.target_link }}
+            TARGET_DEPTH: ${{ inputs.target_depth }}
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
