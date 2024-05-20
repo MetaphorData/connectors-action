@@ -32,7 +32,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: MetaphorData/connectors-action@v0.13
+      - uses: MetaphorData/connectors-action@v0.14
         env:
             MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
