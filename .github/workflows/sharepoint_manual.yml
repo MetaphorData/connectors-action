@@ -1,6 +1,8 @@
-name: notion_manual
+name: sharepoint_manual
 
 on:
+  schedule:
+    - cron: "0 6 * * *"  # 11PM PST daily
   workflow_dispatch:
       inputs:
           env:
@@ -20,27 +22,39 @@ on:
           description: Azure OpenAI services key
           required: true
 
-        NOTION_API_TOKEN:
-          description: Notion integration token
+        SHAREPOINT_CLIENT_SECRET:
+          description: Azure AD App client secret
           required: true
       
 jobs:
-  notion-crawl:
-    name: Notion Crawl
+  sharepoint-crawl:
+    name: Sharepoint Crawl
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up defaults for scheduled run
+        if: github.event_name == 'schedule'
+        run: |
+          echo "OUTPUT_ENV=stage" >> $GITHUB_ENV
+
+      - name: Set up variables from workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "OUTPUT_ENV=${{ inputs.env }}" >> $GITHUB_ENV
+
       - uses: MetaphorData/connectors-action@v0.14
         env:
+            SHAREPOINT_CLIENT_ID: ${{ vars.SHAREPOINT_CLIENT_ID }}
+            SHAREPOINT_TENANT_ID: ${{ vars.SHAREPOINT_TENANT_ID }}
+            SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
-            NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_REGION: us-west-2
         with:
-            type: notion
-            config: .github/workflows/configs/config_notion.yml
-            s3-path: s3://metaphor-mce-${{ inputs.env }}/notion
+            type: sharepoint
+            config: .github/workflows/configs/config_sharepoint.yml
+            s3-path: s3://metaphor-mce-${{ env.OUTPUT_ENV }}/sharepoint

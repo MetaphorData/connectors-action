@@ -1,10 +1,13 @@
-name: notion_manual
+name: monday_manual
 
 on:
   workflow_dispatch:
       inputs:
           env:
               description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+              required: true
+          boards: 
+              description: Array of Monday.com boards to scrape. Should be formatted as a stringified array, e.g '[12345, 56789]'
               required: true
 
       secrets:
@@ -20,13 +23,13 @@ on:
           description: Azure OpenAI services key
           required: true
 
-        NOTION_API_TOKEN:
-          description: Notion integration token
+        MONDAY_API_KEY:
+          description: Monday.com API key
           required: true
       
 jobs:
-  notion-crawl:
-    name: Notion Crawl
+  monday-crawl:
+    name: Monday.com Crawl
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -34,13 +37,14 @@ jobs:
 
       - uses: MetaphorData/connectors-action@v0.14
         env:
+            MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
+            MONDAY_BOARDS: ${{ fromJSON(inputs.boards) }}
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
-            NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_REGION: us-west-2
         with:
-            type: notion
-            config: .github/workflows/configs/config_notion.yml
-            s3-path: s3://metaphor-mce-${{ inputs.env }}/notion
+            type: monday
+            config: .github/workflows/configs/config_monday.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/monday

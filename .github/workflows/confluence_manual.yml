@@ -1,0 +1,70 @@
+name: confluence_manual
+
+on:
+  schedule:
+    - cron: "0 5 * * *"  # 10PM PST daily
+  workflow_dispatch:
+      inputs:
+          env:
+              description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+              required: true
+          space_key: 
+              description: Space key to scrape (something like "KB", "DEV", etc.)
+              required: true
+
+      secrets:
+        AWS_ACCESS_KEY_ID:
+          description: AWS access key ID for deployment
+          required: true
+
+        AWS_SECRET_ACCESS_KEY:
+          description: AWS secret access key for deployment
+          required: true
+
+        METAPHOR_AZURE_OPENAI_KEY:
+          description: Azure OpenAI services key
+          required: true
+
+        CONFLUENCE_USERNAME:
+          description: Confluence username
+          required: true
+
+        CONFLUENCE_PASSWORD:
+            description: Token associated with CONFLUENCE_USERNAME
+            required: true
+      
+jobs:
+  confluence-crawl:
+    name: Confluence Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up defaults for scheduled run
+        if: github.event_name == 'schedule'
+        run: |
+          echo "OUTPUT_ENV=stage" >> $GITHUB_ENV
+          echo "SPACE_KEY=KB" >> $GITHUB_ENV
+
+      - name: Set up variables from workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "OUTPUT_ENV=${{ inputs.env }}" >> $GITHUB_ENV
+          echo "SPACE_KEY=${{ inputs.space_key }}" >> $GITHUB_ENV
+
+      - uses: MetaphorData/connectors-action@v0.14
+        env:
+            CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
+            CONFLUENCE_PASSWORD: ${{ secrets.CONFLUENCE_PASSWORD }}
+            CONFLUENCE_BASE_URL: ${{ vars.CONFLUENCE_BASE_URL }}
+            SPACE_KEY: ${{ env.SPACE_KEY }}
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: confluence
+            config: .github/workflows/configs/config_confluence.yml
+            s3-path: s3://metaphor-mce-${{ env.OUTPUT_ENV }}/confluence
