@@ -27,7 +27,7 @@ on:
           required: true
       
 jobs:
-  notion-crawl:
+  web-crawl:
     name: Static Webpage Crawl
     runs-on: ubuntu-latest
     steps:
