@@ -1,11 +1,11 @@
 monday_api_key: ${MONDAY_API_KEY}
 monday_api_version: '2024-04'
 
-boards: [6238045435, 6238054278, 6297970515, 6326627356]
+boards: [${TARGET_BOARD}]
 
 azure_openAI_key: ${METAPHOR_AZURE_OPENAI_KEY}
-azure_openAI_version: "2023-12-01-preview"
+azure_openAI_version: 2024-03-01-preview
 azure_openAI_endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}
-azure_openAI_model: text-embedding-ada-002
-azure_openAI_model_name: Embedding_ada002
+azure_openAI_model: text-embedding-3-small
+azure_openAI_model_name: Embedding_3_small
 include_text: true
