@@ -1,4 +1,4 @@
-name: external_search_documents_scheduled
+name: external_document_connectors
 
 on:
   workflow_call:
