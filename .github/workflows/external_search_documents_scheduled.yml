@@ -1,0 +1,160 @@
+name: external_search_documents_scheduled
+
+on:
+  workflow_call:
+    inputs:
+      env:
+        description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+        type: string
+        required: true
+
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        description: AWS access key ID for deployment
+        required: true
+
+      AWS_SECRET_ACCESS_KEY:
+        description: AWS secret access key for deployment
+        required: true
+
+      METAPHOR_AZURE_OPENAI_KEY:
+          description: Azure OpenAI services key
+          required: true
+
+      CONFLUENCE_USERNAME:
+          description: Confluence username
+          required: true
+
+      CONFLUENCE_PASSWORD:
+        description: Token associated with CONFLUENCE_USERNAME
+        required: true
+
+      NOTION_API_TOKEN:
+        description: Notion integration token
+        required: true
+
+      MONDAY_API_KEY:
+        description: Monday.com API key
+        required: true
+
+      SHAREPOINT_CLIENT_SECRET:
+        description: Azure AD App client secret
+        required: true
+
+jobs:
+  sharepoint-crawl:
+    name: Sharepoint crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.14
+        env:
+            SHAREPOINT_CLIENT_ID: ${{ vars.SHAREPOINT_CLIENT_ID }}
+            SHAREPOINT_TENANT_ID: ${{ vars.SHAREPOINT_TENANT_ID }}
+            SHAREPOINT_CLIENT_SECRET: ${{ secrets.SHAREPOINT_CLIENT_SECRET }}
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: sharepoint
+            config: .github/workflows/configs/config_sharepoint.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/sharepoint
+
+  confluence-crawl:
+    name: Confluence Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.14
+        env:
+            CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
+            CONFLUENCE_PASSWORD: ${{ secrets.CONFLUENCE_PASSWORD }}
+            CONFLUENCE_BASE_URL: ${{ vars.CONFLUENCE_BASE_URL }}
+            SPACE_KEY: KB  # set to all KB articles
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: confluence
+            config: .github/workflows/configs/config_confluence.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/confluence
+
+  notion-crawl:
+    name: Notion Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - uses: MetaphorData/connectors-action@v0.14
+        env:
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            NOTION_API_TOKEN: ${{ secrets.NOTION_API_TOKEN }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: notion
+            config: .github/workflows/configs/config_notion.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/notion
+
+  monday-crawl:
+    name: Monday Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create config file with boards
+        run: |  # set target boards
+          echo "" >> .github/workflows/configs/config_monday.yml
+          echo "boards: [6238045435, 6238054278, 6326627356]" >> .github/workflows/configs/config_monday.yml
+
+      - uses: MetaphorData/connectors-action@v0.14
+        env:
+            MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: monday
+            config: .github/workflows/configs/config_monday.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/monday
+
+  web-crawl:
+    name: Static Webpage Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create config file with links
+        run: |  # set target page with no recursion
+          echo "" >> .github/workflows/configs/config_static-web.yml
+          echo "links: [https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/glossary]" >> .github/workflows/configs/config_static-web.yml
+          echo "" >> .github/workflows/configs/config_static-web.yml
+          echo "depths: [0]" >> .github/workflows/configs/config_static-web.yml
+
+      - uses: MetaphorData/connectors-action@v0.14
+        env:
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: static-web
+            config: .github/workflows/configs/config_static-web.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/static-web
+
