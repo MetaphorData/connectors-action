@@ -37,7 +37,8 @@ jobs:
 
       - name: Create config file with boards
         run: |
-          echo "\nboards: [${{ inputs.target_board }}]" >> .github/workflows/configs/config_monday.yml
+          echo '\n' >> .github/workflows/configs/config_monday.yml
+          echo "boards: [${{ inputs.target_board }}]" >> .github/workflows/configs/config_monday.yml
 
       - uses: MetaphorData/connectors-action@v0.13
         env:
