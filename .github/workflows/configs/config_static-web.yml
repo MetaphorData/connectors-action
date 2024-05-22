@@ -1,5 +1,3 @@
-links: [${TARGET_LINK}]
-depths: [${TARGET_DEPTH}]
 azure_openAI_key: ${METAPHOR_AZURE_OPENAI_KEY}
 azure_openAI_version: 2024-03-01-preview
 azure_openAI_endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}

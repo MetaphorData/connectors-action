@@ -34,6 +34,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Create config file with boards
+        run: |
+          echo "" >> .github/workflows/configs/config_static-web.yml
+          echo "boards: [${{ inputs.target_link }}]" >> .github/workflows/configs/config_static-web.yml
+          echo "" >> .github/workflows/configs/config_static-web.yml
+          echo "depths: [${{ inputs.target_depth }}]" >> .github/workflows/configs/config_static-web.yml
+
       - uses: MetaphorData/connectors-action@v0.13
         env:
             TARGET_LINK: ${{ inputs.target_link }}
