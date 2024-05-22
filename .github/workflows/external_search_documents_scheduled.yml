@@ -75,7 +75,6 @@ jobs:
         env:
             CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
             CONFLUENCE_PASSWORD: ${{ secrets.CONFLUENCE_PASSWORD }}
-            CONFLUENCE_BASE_URL: ${{ vars.CONFLUENCE_BASE_URL }}
             SPACE_KEY: KB  # set to all KB articles
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
