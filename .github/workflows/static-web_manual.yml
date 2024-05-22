@@ -43,8 +43,6 @@ jobs:
 
       - uses: MetaphorData/connectors-action@v0.13
         env:
-            TARGET_LINK: ${{ inputs.target_link }}
-            TARGET_DEPTH: ${{ inputs.target_depth }}
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
