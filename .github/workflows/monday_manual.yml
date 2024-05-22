@@ -35,7 +35,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - uses: MetaphorData/connectors-action@v0.14
+      - name: Create config file with boards
+        run: |
+          echo "boards: [${{ inputs.target_board }}]" > .github/workflows/configs/config_monday.yml
+
+      - uses: MetaphorData/connectors-action@v0.13
         env:
             TARGET_BOARD: ${{ inputs.target_board }}
             MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
