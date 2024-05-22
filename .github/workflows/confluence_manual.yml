@@ -1,8 +1,6 @@
 name: confluence_manual
 
 on:
-  schedule:
-    - cron: "0 5 * * *"  # 10PM PST daily
   workflow_dispatch:
       inputs:
           env:
@@ -41,18 +39,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up defaults for scheduled run
-        if: github.event_name == 'schedule'
-        run: |
-          echo "OUTPUT_ENV=stage" >> $GITHUB_ENV
-          echo "SPACE_KEY=KB" >> $GITHUB_ENV
-
-      - name: Set up variables from workflow_dispatch
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          echo "OUTPUT_ENV=${{ inputs.env }}" >> $GITHUB_ENV
-          echo "SPACE_KEY=${{ inputs.space_key }}" >> $GITHUB_ENV
-
       - uses: MetaphorData/connectors-action@v0.14
         env:
             CONFLUENCE_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
@@ -67,4 +53,4 @@ jobs:
         with:
             type: confluence
             config: .github/workflows/configs/config_confluence.yml
-            s3-path: s3://metaphor-mce-${{ env.OUTPUT_ENV }}/confluence
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/confluence
