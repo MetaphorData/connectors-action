@@ -41,7 +41,7 @@ jobs:
           echo "" >> .github/workflows/configs/config_static-web.yml
           echo "depths: [${{ inputs.target_depth }}]" >> .github/workflows/configs/config_static-web.yml
 
-      - uses: MetaphorData/connectors-action@v0.13
+      - uses: MetaphorData/connectors-action@v0.14
         env:
             METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
             METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
