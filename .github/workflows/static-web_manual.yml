@@ -1,0 +1,54 @@
+name: static-web_manual
+
+on:
+  workflow_dispatch:
+      inputs:
+          target_link:
+              description: Publicly accessible link to scrape.
+              required: true
+          target_depth:
+              description: Recursion depth to scrape. Typically 0 or 1.
+              required: true
+          env:
+              description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+              required: true
+
+      secrets:
+        AWS_ACCESS_KEY_ID:
+          description: AWS access key ID for deployment
+          required: true
+
+        AWS_SECRET_ACCESS_KEY:
+          description: AWS secret access key for deployment
+          required: true
+
+        METAPHOR_AZURE_OPENAI_KEY:
+          description: Azure OpenAI services key
+          required: true
+      
+jobs:
+  web-crawl:
+    name: Static Webpage Crawl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create config file with links
+        run: |
+          echo "" >> .github/workflows/configs/config_static-web.yml
+          echo "links: [${{ inputs.target_link }}]" >> .github/workflows/configs/config_static-web.yml
+          echo "" >> .github/workflows/configs/config_static-web.yml
+          echo "depths: [${{ inputs.target_depth }}]" >> .github/workflows/configs/config_static-web.yml
+
+      - uses: MetaphorData/connectors-action@v0.13
+        env:
+            METAPHOR_AZURE_OPENAI_KEY: ${{ secrets.METAPHOR_AZURE_OPENAI_KEY }}
+            METAPHOR_AZURE_OPENAI_ENDPOINT: ${{ vars.METAPHOR_AZURE_OPENAI_ENDPOINT }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_REGION: us-west-2
+        with:
+            type: static-web
+            config: .github/workflows/configs/config_static-web.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/static-web
