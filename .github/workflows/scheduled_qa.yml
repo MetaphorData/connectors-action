@@ -1,0 +1,13 @@
+name: scheduled_connectors_qa
+
+on:
+  schedule:
+  # Runs daily at 11PM PST
+    - cron: 0 6 * * *
+
+jobs:
+  run-connectors:
+    uses: ./.github/workflows/external_document_connectors.yml
+    with:
+        env: qa
+    secrets: inherit
