@@ -2,8 +2,8 @@ name: scheduled_connectors_stage
 
 on:
   schedule:
-  # Runs daily at 9PM PST
-    - cron: 0 4 * * *
+  # Runs daily at 10PM PST
+    - cron: 0 5 * * *
 
 jobs:
   run-connectors:

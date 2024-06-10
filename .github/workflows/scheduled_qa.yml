@@ -2,8 +2,8 @@ name: scheduled_connectors_qa
 
 on:
   schedule:
-  # Runs daily at 10PM PST
-    - cron: 0 5 * * *
+  # Runs daily at 11PM PST
+    - cron: 0 6 * * *
 
 jobs:
   run-connectors:
