@@ -1,0 +1,13 @@
+name: scheduled_connectors_stage
+
+on:
+  schedule:
+  # Runs daily at 9PM PST
+    - cron: 0 4 * * *
+
+jobs:
+  run-connectors:
+    uses: ./.github/workflows/external_document_connectors.yml
+    with:
+        env: stage
+    secrets: inherit

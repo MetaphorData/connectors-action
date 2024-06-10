@@ -1,0 +1,13 @@
+name: scheduled_connectors_demo
+
+on:
+  schedule:
+  # Runs daily at 12AM PST
+    - cron: 0 7 * * *
+
+jobs:
+  run-connectors:
+    uses: ./.github/workflows/external_document_connectors.yml
+    with:
+        env: demo
+    secrets: inherit
