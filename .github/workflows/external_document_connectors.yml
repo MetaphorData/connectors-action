@@ -113,11 +113,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create config file with boards
-        run: |  # set target boards
-          echo "" >> .github/workflows/configs/config_monday.yml
-          echo "boards: [6238045435, 6238054278, 6326627356]" >> .github/workflows/configs/config_monday.yml
-
       - uses: MetaphorData/connectors-action@v0.14
         env:
             MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
