@@ -1,4 +1,4 @@
-name: static-web_manual
+name: static_web_manual
 
 on:
   workflow_dispatch:
@@ -36,10 +36,10 @@ jobs:
 
       - name: Create config file with links
         run: |
-          echo "" >> .github/workflows/configs/config_static-web.yml
-          echo "links: [${{ inputs.target_link }}]" >> .github/workflows/configs/config_static-web.yml
-          echo "" >> .github/workflows/configs/config_static-web.yml
-          echo "depths: [${{ inputs.target_depth }}]" >> .github/workflows/configs/config_static-web.yml
+          echo "" >> .github/workflows/configs/config_static_web.yml
+          echo "links: [${{ inputs.target_link }}]" >> .github/workflows/configs/config_static_web.yml
+          echo "" >> .github/workflows/configs/config_static_web.yml
+          echo "depths: [${{ inputs.target_depth }}]" >> .github/workflows/configs/config_static_web.yml
 
       - uses: MetaphorData/connectors-action@v0.14
         env:
@@ -50,5 +50,5 @@ jobs:
             AWS_REGION: us-west-2
         with:
             type: static_web
-            config: .github/workflows/configs/config_static-web.yml
-            s3-path: s3://metaphor-mce-${{ inputs.env }}/static-web
+            config: .github/workflows/configs/config_static_web.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/static_web
