@@ -1,6 +1,12 @@
 name: external_document_connectors
 
 on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+        type: string
+        required: true
   workflow_call:
     inputs:
       env:
@@ -113,11 +119,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create config file with boards
-        run: |  # set target boards
-          echo "" >> .github/workflows/configs/config_monday.yml
-          echo "boards: [6238045435, 6238054278, 6326627356]" >> .github/workflows/configs/config_monday.yml
-
       - uses: MetaphorData/connectors-action@v0.14
         env:
             MONDAY_API_KEY: ${{ secrets.MONDAY_API_KEY }}
@@ -140,10 +141,10 @@ jobs:
 
       - name: Create config file with links
         run: |  # set target page with no recursion
-          echo "" >> .github/workflows/configs/config_static-web.yml
-          echo "links: [https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/glossary]" >> .github/workflows/configs/config_static-web.yml
-          echo "" >> .github/workflows/configs/config_static-web.yml
-          echo "depths: [0]" >> .github/workflows/configs/config_static-web.yml
+          echo "" >> .github/workflows/configs/config_static_web.yml
+          echo "links: [https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/glossary]" >> .github/workflows/configs/config_static_web.yml
+          echo "" >> .github/workflows/configs/config_static_web.yml
+          echo "depths: [0]" >> .github/workflows/configs/config_static_web.yml
 
       - uses: MetaphorData/connectors-action@v0.14
         env:
@@ -153,7 +154,7 @@ jobs:
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_REGION: us-west-2
         with:
-            type: static-web
-            config: .github/workflows/configs/config_static-web.yml
-            s3-path: s3://metaphor-mce-${{ inputs.env }}/static-web
+            type: static_web
+            config: .github/workflows/configs/config_static_web.yml
+            s3-path: s3://metaphor-mce-${{ inputs.env }}/static_web
 

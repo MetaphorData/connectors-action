@@ -3,9 +3,6 @@ name: monday_manual
 on:
   workflow_dispatch:
       inputs:
-          target_board:
-              description: Monday.com board ID to extract. Must be in the metaphor-ensemble workspace.
-              required: true
           env:
               description: Environment to publish to (e.g. dev-marslan, stage, etc.)
               required: true
@@ -34,11 +31,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Create config file with boards
-        run: |
-          echo "" >> .github/workflows/configs/config_monday.yml
-          echo "boards: [${{ inputs.target_board }}]" >> .github/workflows/configs/config_monday.yml
 
       - uses: MetaphorData/connectors-action@v0.14
         env:
