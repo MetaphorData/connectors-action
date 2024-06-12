@@ -1,6 +1,12 @@
 name: external_document_connectors
 
 on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: Environment to publish to (e.g. dev-marslan, stage, etc.)
+        type: string
+        required: true
   workflow_call:
     inputs:
       env:
