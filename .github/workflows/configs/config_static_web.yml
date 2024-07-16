@@ -1,7 +1,7 @@
 embed_source: azure-openai
-embed_source: azure-openai
-embed_model_config:
-    azure_openAI_key: ${METAPHOR_AZURE_OPENAI_KEY}
-    azure_openAI_endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}
+embedding_model:
+  azure_openai:
+    key: ${METAPHOR_AZURE_OPENAI_KEY}
+    endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}
 
 include_text: true
