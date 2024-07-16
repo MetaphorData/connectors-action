@@ -1,9 +1,9 @@
 monday_api_key: ${MONDAY_API_KEY}
 monday_api_version: '2024-04'
 
-azure_openAI_key: ${METAPHOR_AZURE_OPENAI_KEY}
-azure_openAI_version: 2024-03-01-preview
-azure_openAI_endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}
-azure_openAI_model: text-embedding-3-small
-azure_openAI_model_name: Embedding_3_small
+embedding_model:
+  azure_openai:
+    key: ${METAPHOR_AZURE_OPENAI_KEY}
+    endpoint: ${METAPHOR_AZURE_OPENAI_ENDPOINT}
+
 include_text: true
