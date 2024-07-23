@@ -1,4 +1,3 @@
-embed_source: azure-openai
 embedding_model:
   azure_openai:
     key: ${METAPHOR_AZURE_OPENAI_KEY}
